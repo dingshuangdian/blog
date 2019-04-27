@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="zxx">
+
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    {% block title %}
+        <title>个人博客</title>
+    {% endblock %}
+    {% block js %}
+    {% endblock %}
+
+
+    <!-- css include -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/icofont.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.theme.default.min.css' %}">
+
+    <!-- my css include -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom-menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+
+</head>
+
+
+<body>
+
+
+<div class="thetop"></div>
+<!-- for back to top -->
+
+<div class='backToTop'>
+    <a href="#" class='scroll'>
+        <span>T</span>
+        <span>O</span>
+        <span>P</span>
+        <span class="go-up">
+					<i class="icofont icofont-long-arrow-up"></i>
+				</span>
+    </a>
+</div>
+<!-- backToTop -->
+
+
+<!-- ==================== header-section Start ==================== -->
+<header id="header-section" class="header-section w100dt navbar-fixed">
+
+    <nav class="nav-extended main-nav">
+        <div class="container">
+            <div class="row">
+                <div class="nav-wrapper w100dt">
+
+                    <div class="logo left">
+                        <a href="index.html" class="brand-logo">
+                            <img src="{% static 'img/logo.png' %}" alt="brand-logo">
+                        </a>
+                    </div>
+                    <!-- logo -->
+
+                    <div>
+                        <a href="#" data-activates="mobile-demo" class="button-collapse">
+                            <i class="icofont icofont-navigation-menu"></i>
+                        </a>
+                        <ul id="nav-mobile" class="main-menu center-align hide-on-med-and-down">
+                            <li class="{% ifequal request.path '/' %}active{% endifequal %}">
+                                <a href="{% url "index" %}">HOME</a>
+                            </li>
+                            <li class="dropdown {% ifequal request.path|slice:'9' '/articles' %}active{% endifequal %}">
+                                <a href="#" onclick="return false">文章分类 <i class="icofont icofont-simple-down"></i></a>
+                                <ul class="dropdown-container">
+                                    {% for category in categories %}
+                                        <li><a href="{% url "articleslist" category.id %}">{{ category.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                                <!-- /.dropdown-container -->
+                            </li>
+                            <li><a href="{% url "jottinglist" %}">心情随笔</a></li>
+                            <li><a href="{% url "contact" %}">联系我</a></li>
+                        </ul>
+                        <!-- /.main-menu -->
+
+                        <!-- ******************** sidebar-menu ******************** -->
+                        <ul class="side-nav" id="mobile-demo">
+                            <li class="snavlogo center-align"><img src="{% static 'img/logo.png' %}" alt="logo"></li>
+                            <li class="active"><a href="{% url 'index' %}">HOME</a></li>
+                            <li><a href="{% url "jottinglist" %}">心情随笔</a></li>
+                            <li><a href="{% url "contact" %}">联系我</a></li>
+                            <li><a href="#">文章分类</a></li>
+                            {% for category in categories %}
+                                <li><a href="{% url "articleslist" category.id %}">{{ category.name }}</a></li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                    <!-- main-menu -->
+
+                    <a href="#" class="search-trigger right">
+                        <i class="icofont icofont-search"></i>
+                    </a>
+                    <!-- search -->
+                    <div id="myNav" class="overlay">
+                        <a href="javascript:void(0)" class="closebtn">&times;</a>
+                        <div class="overlay-content">
+                            <form method="get" action="{% url 'search' %}">
+                                <input id="search_keywords" type="text" name="search" placeholder="Search...">
+                                <br>
+                                <button class="waves-effect waves-light" type="submit">
+                                    Search
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.nav-wrapper -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </nav>
+
+</header>
+<!-- /#header-section -->
+<!-- ==================== header-section End ==================== -->
+
+
+{% block content %}
+{% endblock %}
+
+
+
+<!-- ==================== instag leftram-section Start ==================== -->
+<section id="instagram-section" class="instagram-section w100dt">
+
+    <div class="instagram-link w100dt">
+        <a href="https://shop530346312.taobao.com/?spm=a1z10.1-c.0.0.1c1f6daeeNP5VM">
+            <span>版 权 所 有</span><br/>
+            ©️源 码 商 城
+        </a>
+    </div>
+
+</section>
+<!-- /#instag leftram-section -->
+<!-- ==================== instag leftram-section End ==================== -->
+
+
+<!-- ==================== footer-section Start ==================== -->
+<footer id="footer-section" class="footer-section w100dt">
+    <div class="container">
+
+        <div class="footer-logo w100dt center-align mb-30">
+            <a href="#" class="brand-logo">
+                <img src="{% static 'img/logo.png' %}" alt="brand-logo">
+            </a>
+        </div>
+
+        <p class="center-align">
+            <i class="icofont icofont-heart-alt l-blue"></i>
+            All Right Reserved,by
+            <a href="https://shop530346312.taobao.com/?spm=a1z10.1-c.0.0.1c1f6daeeNP5VM" class="l-blue">©️源码商城</a>
+        </p>
+
+    </div>
+    <!-- container -->
+</footer>
+<!-- /#footer-section -->
+<!-- ==================== footer-section End ==================== -->
+
+
+<!-- my custom js -->
+<script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+<!-- my custom js -->
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+<script type="text/javascript">
+
+</script>
+
+
+</body>
+
+</html>

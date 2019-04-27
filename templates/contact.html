@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+
+    <!-- ==================== header-section Start ==================== -->
+    <section id="breadcrumb-section" class="breadcrumb-section w100dt mb-30">
+        <div class="container">
+
+            <nav class="breadcrumb-nav w100dt">
+                <div class="page-name hide-on-small-only left">
+                    <h4>CONTACT</h4>
+                </div>
+                <div class="nav-wrapper right">
+                    <a href="{% url 'index' %}" class="breadcrumb">Home</a>
+                    <a href="#" class="breadcrumb active" onclick="return false">Contact</a>
+                </div>
+                <!-- /.nav-wrapper -->
+            </nav>
+            <!-- /.breadcrumb-nav -->
+
+        </div>
+        <!-- container -->
+    </section>
+    <!-- /.breadcrumb-section -->
+    <!-- ==================== header-section End ==================== -->
+
+
+
+
+
+    <!-- ==================== contact-section start ==================== -->
+    <section id="contact-section" class="contact-section w100dt mb-50">
+        <div class="container">
+
+            <div id="map-section" class="map-section w100dt mb-50">
+                <div id="google-map">
+
+
+                    <div id="container">地图</div>
+
+
+                </div>
+                <!-- /#google-map-->
+            </div>
+            <!-- /#map-section -->
+
+            <div class="row">
+                <div class="col m9 s12">
+                    <div class="sidebar-title left-align">
+                        <h2>Contact Me</h2>
+                    </div>
+
+                    <div class="contact-me">
+                        <div class="row">
+
+                            <div class="col m6 s12">
+                                <p class="mb-30">
+                                    感谢浏览本博客，如您有任何问题可通过以下方式联系我，也可以通过右侧的邮箱进行留言，我会及时回复。<br/>
+                                    If you have any questions, please contact me through our online support system and
+                                    we will contact you shortly.
+                                </p>
+
+                                <div class="contact-things">
+                                    <div class="c-icon">
+                                        <i class="icofont icofont-location-pin"></i>
+                                    </div>
+                                    <div class="c-text p-0">
+                                        <p>联系地址:</p>
+                                        <p>{{ admin.address }}</p>
+                                    </div>
+                                </div>
+                                <!-- /.contact-things -->
+                                <div class="contact-things">
+                                    <div class="c-icon">
+                                        <i class="icofont icofont-phone"></i>
+                                    </div>
+                                    <div class="c-text">
+                                        <p>电话：{{ admin.phone }}</p>
+                                    </div>
+                                </div>
+                                <!-- /.contact-things -->
+                                <div class="contact-things">
+                                    <div class="c-icon">
+                                        <i class="icofont icofont-send-mail"></i>
+                                    </div>
+                                    <div class="c-text">
+                                        <p>邮箱：{{ admin.email }}</p>
+                                    </div>
+                                </div>
+                                <!-- /.contact-things -->
+                            </div>
+                            <!-- colsm6 -->
+
+                            <div class="col m6 s12">
+                                <form class="contact-form" id="jsStayForm">
+                                    <div class="contact-input">
+                                        <input id="first_name" type="text" class="validate" name="name">
+                                        <label for="first_name">Name</label>
+                                    </div>
+                                    <!-- first_name -->
+
+                                    <div class="contact-input">
+                                        <input id="email" type="email" class="validate" name="email">
+                                        <label for="email" data-error="wrong" data-success="right">Email</label>
+                                    </div>
+                                    <!-- email -->
+
+                                    <div class="contact-input">
+                                        <input id="subject" type="text" class="validate" name="subject">
+                                        <label for="subject">Subject</label>
+                                    </div>
+                                    <!-- subject -->
+
+                                    <div class="contact-input">
+                                        <textarea id="textarea1" class="materialize-textarea" name="message"></textarea>
+                                        <label for="textarea1" data-model-name="textarea1">Type your message</label>
+                                    </div>
+                                    <!-- textarea1 -->
+                                    <button type="submit" class="waves-effect waves-light right" id="sendmsg">SEND
+                                        MESSAGE
+                                    </button>
+                                    {% csrf_token %}
+                                </form>
+                                <!-- /.contact-form -->
+                            </div>
+                            <!-- colsm6 -->
+
+                        </div>
+                        <!-- row -->
+                    </div>
+                    <!-- /.contact-me -->
+                </div>
+                <!-- colm9 -->
+
+            </div>
+            <!-- row -->
+
+        </div>
+        <!-- container -->
+    </section>
+    <!-- /#contact-section -->
+    <!-- ==================== contact-section end ==================== -->
+
+
+    <script type="text/javascript"
+            src="https://webapi.amap.com/maps?v=1.4.14&key=8393f9097ef01612458204f33580717f"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+
+    <script>
+        var address = {{ address|safe }};
+        AMap.plugin('AMap.Geocoder', function () {
+            var geocoder = new AMap.Geocoder({
+                // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
+                city: '010'
+            });
+
+            geocoder.getLocation(address, function (status, result) {
+                var lnglat;
+                if (status === 'complete' && result.info === 'OK') {
+                    lnglat = result.geocodes[0].location;
+                } else {
+                    lnglat = [116.397428, 39.90923]
+                }
+                var map = new AMap.Map('container', {
+                    zoom: 11,//级别
+                    center: lnglat,//中心点坐标
+                    viewMode: '3D'//使用3D视图
+                });
+                marker = new AMap.Marker({});
+                marker.setMap(map);
+            })
+        });
+
+        $(function () {
+            $('#sendmsg').on('click', function () {
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "{% url 'msg' %}",
+                    data: $('#jsStayForm').serialize(),
+                    async: true,
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            $('#jsStayForm')[0].reset();
+                            alert("提交成功")
+                        } else if (data.status == 'fail') {
+                            $('#jsCompanyTips').html(data.msg)
+                        }
+                    },
+                });
+            });
+        })
+
+
+    </script>
+{% endblock %}

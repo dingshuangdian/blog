@@ -1,0 +1,351 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <!-- ==================== header-section Start ==================== -->
+    <section id="breadcrumb-section" class="breadcrumb-section w100dt mb-30">
+        <div class="container">
+
+            <nav class="breadcrumb-nav w100dt">
+                <div class="page-name hide-on-small-only left">
+                    <h4>CATEOGRY</h4>
+                </div>
+                <div class="nav-wrapper right">
+                    <a href="{% url 'index' %}" class="breadcrumb">Home</a>
+                    <a href="#" class="breadcrumb active" onclick="return false">心情随笔</a>
+                </div>
+                <!-- /.nav-wrapper -->
+            </nav>
+            <!-- /.breadcrumb-nav -->
+
+        </div>
+        <!-- container -->
+    </section>
+    <!-- /.breadcrumb-section -->
+    <!-- ==================== header-section End ==================== -->
+
+
+    <!-- ==================== cateogry-section start ==================== -->
+    <section id="cateogry-section" class="cateogry-section w100dt mb-50">
+        <div class="container">
+            <div class="row">
+
+                <div class="col s12 m8 l8">
+
+
+                    <div class="row">
+                        {% for jotting in jottings.object_list %}
+                            <div class="col m12 s12">
+                                <div class="blogs mb-30">
+                                    <div class="card">
+                                        <div class="card-image">
+                                            <img src="{{ MEDIA_URL }}{{ jotting.img }}" alt="Image">
+                                            <a class="btn-floating center-align cmn-bgcolor halfway-fab waves-effect waves-light">
+                                                <i class="icofont icofont-camera-alt"></i>
+                                            </a>
+                                        </div>
+                                        <!-- /.card-image -->
+                                        <div class="card-content w100dt">
+                                            <a href="{% url 'jottingdetail' jotting.id %}" class="card-title">
+                                                {{ jotting.title }}
+                                            </a>
+                                            <p class="mb-30">
+                                                {{ jotting.info }}
+                                            </p>
+                                            <ul class="post-mate-time left">
+                                                <li>
+                                                    <p class="hero left">
+                                                        By - <a href="{% url 'contact' %}" class="l-blue">{{ jotting.author }}</a>
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <i class="icofont icofont-ui-calendar"></i> {{ jotting.add_time }}
+                                                </li>
+                                            </ul>
+
+                                    <ul class="post-mate right">
+                                        <li class="like">
+                                            <a href="#" onclick="return false">
+                                                <i class="icofont icofont-heart-alt"></i> {{ jotting.fav_nums }}
+                                            </a>
+                                        </li>
+                                        <li class="comment" onclick="return false">
+                                            <a href="#">
+                                                <i class="icofont icofont-comment"></i> {{ jotting.comment_nums }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- /.card-content -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.blogs -->
+                    </div>
+                    <!-- colm6 -->
+
+                        {% endfor %}
+                    </div>
+                    <!-- row -->
+
+                                        <!-- ==================== 分页器 start ==================== -->
+
+
+                    <ul class="pagination w100dt">
+                        <li class="waves-effect">
+                            {% if jottings.has_previous %}
+                                <a href="?{{ jottings.previous_page_number.querystring }}"><i
+                                        class="icofont icofont-simple-left"></i></a>
+                            {% else %}
+                                <a href="#" onclick="return false"><i class="icofont icofont-simple-left"></i></a>
+                            {% endif %}
+                        </li>
+
+                        {% for page in jottings.pages %}
+                            {% if page %}
+                                {% ifequal page jotting.number %}
+                                    <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                                {% else %}
+                                    <li class="waves-effect"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                                {% endifequal %}
+                            {% endif %}
+                        {% endfor %}
+
+                        <li class="waves-effect">
+                            {% if jottings.has_next %}
+                                <a href="?{{ jottings.next_page_number.querystring }}"><i
+                                        class="icofont icofont-simple-right"></i></a>
+                            {% else %}
+                                <a href="#" onclick="return false"><i class="icofont icofont-simple-right"></i></a>
+
+                            {% endif %}
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- ==================== 分页器 end ==================== -->
+
+                <!-- colm8 -->
+
+
+                <div class="col s12 m4 l4">
+
+                    <div class="sidebar-testimonial mb-30">
+                        <div class="sidebar-title center-align">
+                            <h2>Hi Its Me!</h2>
+                        </div>
+                        <!-- /.sidebar-title -->
+
+                        <div class="carousel carousel-slider center" data-indicators="true">
+                            {% for itsme in itsmes %}
+                                <div class="carousel-item">
+                                    <div class="item-img">
+                                        <span>{{ itsme.tag }}</span>
+                                    </div>
+                                    <h2>{{ itsme.title }}</h2>
+                                    <small>{{ itsme.se_title }}</small>
+                                    <p>
+                                        {{ itsme.info }}
+                                    </p>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <!-- /.sidebar-testimonial -->
+
+
+                    <div class="featured-posts w100dt mb-30">
+                        <div class="sidebar-title center-align">
+                            <h2>Featured Posts</h2>
+                        </div>
+                        <!-- /.sidebar-title -->
+
+                        <div class="sidebar-posts">
+                            {% for jotting in content_jottings %}
+                                <div class="card">
+                                    <div class="card-image mb-10">
+                                        <img src="{{ MEDIA_URL }}{{ jotting.img }}" alt="Image">
+                                        <span class="effect"></span>
+                                    </div>
+                                    <!-- /.card-image -->
+                                    <div class="card-content w100dt">
+
+                                        <a href="{% url 'jottingdetail' jotting.id %}"
+                                           class="card-title">
+                                            {{ jotting.title }}
+                                        </a>
+                                        <ul class="post-mate-time left">
+                                            <li>
+                                                <p class="hero left">
+                                                    By - <a href="#" class="l-blue"
+                                                            onclick="return false">{{ jotting.author }}</a>
+                                                </p>
+                                            </li>
+                                        </ul>
+
+                                        <ul class="post-mate right">
+                                            <li class="like">
+                                                <a href="#" onclick="return false">
+                                                    <i class="icofont icofont-heart-alt"></i> {{ jotting.fav_nums }}
+                                                </a>
+                                            </li>
+                                            <li class="comment" onclick="return false">
+                                                <a href="#" onclick="return false">
+                                                    <i class="icofont icofont-comment"></i> {{ jotting.comment_nums }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.card-content -->
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <!-- /.sidebar-posts -->
+
+                    </div>
+                    <!-- /.featured-posts -->
+
+
+                    <div class="top-post w100dt mb-30">
+                        <div class="sidebar-title center-align">
+                            <h2>Top Posts</h2>
+                        </div>
+                        <!-- /.sidebar-title -->
+
+                        <ul id="tabs-swipe-demo" class="top-post-tab tabs tabs-fixed-width">
+                            <li class="tab"><a href="#test-swipe-1" class="active">Most Views</a></li>
+                            <li class="tab"><a href="#test-swipe-2">Recent</a></li>
+                        </ul>
+
+                        <div id="test-swipe-1" class="tab-contant most-view">
+
+                            <div class="sidebar-posts">
+                                {% for jotting in view_jottings %}
+                                    {% ifequal forloop.counter 1 %}
+                                        <div class="card">
+                                            <div class="card-image mb-10">
+                                                <img src="{{ MEDIA_URL }}{{ jotting.img }}" alt="Image">
+                                                <span class="effect"></span>
+                                            </div>
+                                            <!-- /.card-image -->
+                                            <div class="card-content w100dt">
+
+                                                <a href="{% url 'jottingdetail' jotting.id %}"
+                                                   class="card-title">
+                                                    {{ jotting.title }}
+                                                </a>
+                                                <ul class="post-mate-time left">
+                                                    <li>
+                                                        <p class="hero left">
+                                                            By - <a href="#"
+                                                                    class="l-blue">{{ jotting.author }}</a>
+                                                        </p>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="post-mate right">
+                                                    <li class="like">
+                                                        <a href="#" onclick="return false">
+                                                            <i class="icofont icofont-heart-alt"></i> {{ jotting.fav_nums }}
+                                                        </a>
+                                                    </li>
+                                                    <li class="comment">
+                                                        <a href="#" onclick="return false">
+                                                            <i class="icofont icofont-comment"></i> {{ jotting.comment_nums }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- /.card-content -->
+                                        </div>
+                                        <!-- /.card -->
+
+                                    {% else %}
+                                        <div class="hot-post w100dt mb-10">
+                                            <div class="hot-post-image">
+                                                <img src="{{ MEDIA_URL }}{{ jotting.img }}" alt="Image">
+                                                <span class="effect"></span>
+                                            </div>
+                                            <!-- /.hot-post-image -->
+                                            <div class="hot-post-stacked">
+
+                                                <a href="{% url 'jottingdetail' jotting.id %}" class="sm-name mb-10">
+                                                    {{ jotting.title }}
+                                                    Saboris</a>
+                                                <div class="hot-post-action">
+                                                    <p class="hero left">
+                                                        BY - <a href="#" class="l-blue" onclick="return false">{{ jotting.author }}</a>
+                                                    </p>
+                                                    <ul class="post-mate right">
+                                                        <li class="comment">
+                                                            <a href="#" onclick="return false">
+                                                                <i class="icofont icofont-comment"></i> {{ jotting.comment_nums }}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- /.post-mate -->
+                                                </div>
+                                                <!-- /.hot-post-action -->
+                                            </div>
+                                            <!-- /.hot-post-stacked -->
+                                        </div>
+                                    {% endifequal %}
+                                {% endfor %}
+                            </div>
+                            <!-- /.sidebar-posts -->
+
+                        </div>
+                        <!-- /.most-view -->
+
+
+                        <div id="test-swipe-2" class="tab-contant recent-post">
+                            {% for jotting in recent_jottings %}
+                            <div class="hot-post w100dt p-15">
+                                <div class="hot-post-image">
+                                    <img src="{{ MEDIA_URL }}{{ jotting.img }}" alt="Image">
+                                    <span class="effect"></span>
+                                </div>
+                                <!-- /.hot-post-image -->
+                                <div class="hot-post-stacked">
+
+                                    <a href="{% url 'jottingdetail' jotting.id %}" class="sm-name mb-10">
+                                         {{ jotting.title }}
+                                    </a>
+                                    <div class="hot-post-action">
+                                        <p class="hero left">
+                                            BY - <a href="#" class="l-blue" onclick="return false">{{ jotting.author }}</a>
+                                        </p>
+                                        <ul class="post-mate right">
+                                            <li class="comment">
+                                                <a href="#" onclick="return false">
+                                                    <i class="icofont icofont-comment"></i> {{ jotting.comment_nums }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <!-- /.post-mate -->
+                                    </div>
+                                    <!-- /.hot-post-action -->
+                                </div>
+                                <!-- /.hot-post-stacked -->
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <!-- /.recent-post -->
+
+                    </div>
+                    <!-- /.top-post -->
+
+                </div>
+                <!-- colm4 -->
+
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </section>
+    <!-- /#cateogry-section -->
+    <!-- ==================== cateogry-section end ==================== -->
+
+{% endblock %}

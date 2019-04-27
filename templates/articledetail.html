@@ -1,0 +1,502 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+
+    <!-- ==================== single-blog-section start ====================-->
+    <section id="single-blog-section" class="single-blog-section w100dt mb-50">
+        <div class="container">
+            <div class="row">
+
+                <div class="col m8 s12">
+
+                    <div class="blogs mb-30">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="{{ MEDIA_URL }}{{ article.img }}" alt="Image">
+                            </div>
+                            <!-- /.card-image -->
+                            <div class="card-content w100dt">
+                                <p>
+                                    <a href="{% url 'articleslist' article.categorie_id %}"
+                                       class="tag left w100dt l-blue mb-30">{{ article.categorie.name }}</a>
+                                </p>
+                                <a href="#" class="card-title mb-30" onclick="return false">
+                                    {{ article.title }}
+                                </a>
+                                <p class="mb-30">
+                                    {{ article.info }}
+                                </p>
+                                <ul class="post-mate-time left mb-30">
+                                    <li>
+                                        <p class="hero left">
+                                            By - <a href="{% url 'contact' %}" class="l-blue">{{ article.author }}</a>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <i class="icofont icofont-ui-calendar"></i> {{ article.add_time }}
+                                    </li>
+                                </ul>
+
+                                <ul class="post-mate right mb-30">
+                                    <li class="like">
+                                        <a href="#" onclick="return false">
+                                            <i class="icofont icofont-heart-alt"></i> {{ article.fav_nums }}
+                                        </a>
+                                    </li>
+                                    <li class="comment">
+                                        <a href="#" onclick="return false">
+                                            <i class="icofont icofont-comment"></i> {{ article.comment_nums }}
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                {{ article.content|safe }}
+
+                                <ul class="tag-list left">
+                                    {% for tag in tags %}
+                                        <li><a href="#!" class="waves-effect">#{{ tag }}</a></li>
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+                            <!-- /.card-content -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.blogs -->
+
+                    <div class="prv-nxt-post w100dt mb-30">
+                        <div class="row">
+                            {% if prearticle %}
+                                <div class="col m6 s12">
+                                    <div class="sb-prv-post">
+                                        <div class="pn-img left">
+                                            <img src="{{ MEDIA_URL }}{{ prearticle.img }}" alt="Image">
+                                        </div>
+                                        <div class="pn-text left-align">
+                                            <a href="{% url 'articledetail' prearticle.id %}" class="title-name mb-10">
+                                                {{ prearticle.title }}</a>
+                                            <br/>
+                                            <a href="{% url 'articledetail' prearticle.id %}"
+                                               class="prv-nxt-btn l-blue"><i
+                                                    class="icofont icofont-caret-left"></i> Preveious</a>
+                                        </div>
+                                    </div>
+                                    <!-- /.sb-prv-post -->
+                                </div>
+                                <!-- colm6 -->
+                            {% endif %}
+                            {% if nextarticle %}
+                                <div class="col m6 s12">
+                                    <div class="sb-nxt-post">
+                                        <div class="pn-img right">
+                                            <img src="{{ MEDIA_URL }}{{ nextarticle.img }}" alt="Image">
+                                        </div>
+                                        <div class="pn-text right-align">
+                                            <a href="{% url 'articledetail' nextarticle.id %}" class="title-name mb-10">
+                                                {{ nextarticle.title }}</a>
+                                            <br/>
+                                            <a href="{% url 'articledetail' nextarticle.id %}"
+                                               class="prv-nxt-btn l-blue">Next <i
+                                                    class="icofont icofont-caret-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <!-- /.sb-nxt-post -->
+                                </div>
+                                <!-- colm6 -->
+                            {% endif %}
+
+                        </div>
+                        <!-- row -->
+                    </div>
+
+                    <div class="peoples-comments w100dt mb-30">
+                        <div class="sidebar-title center-align">
+                            <h2>文章评论</h2>
+                        </div>
+
+                        <div class="comment-area w100dt">
+                            {#                            <div id="SOHUCS" sid={{ article.id }}></div>#}
+                            {#                            <script charset="utf-8" type="text/javascript"#}
+                            {#                                    src="https://changyan.sohu.com/upload/changyan.js"></script>#}
+                            {#                            <script type="text/javascript">#}
+                            {#                                window.changyan.api.config({#}
+                            {#                                    appid: 'cytzXhLuB',#}
+                            {#                                    conf: 'prod_ce9db561d42e089c20c0c0e3111cf18d'#}
+                            {#                                });#}
+                            {#                            </script>#}
+
+
+                            <div class="comment w100dt mb-30">
+                                <div class="ppic left">
+                                    <img src="{{ MEDIA_URL }}/users/user0.jpeg" alt="Image">
+                                </div>
+                                <!-- /.ppic -->
+                                <div class="pname">
+                                    <h4 class="mb-10">
+                                        <a href="#" class="card-title l-blue" onclick="return false">
+                                            江小白
+                                        </a>
+                                    </h4>
+                                    <p class="comment-text mb-10">
+                                        文章写得好好，发人深思，有道是：千呼万唤始出来，犹抱琵琶半遮面。
+                                    </p>
+
+                                    <ul class="post-mate-time left">
+                                        <li class="like">
+                                            <a href="#">
+                                                <i class="icofont icofont-heart-alt"></i> 55
+                                            </a>
+                                        </li>
+                                        <li class="comment">
+                                            <a href="#" onclick="return false">
+                                                <i class="icofont icofont-comment"></i> 32
+                                            </a>
+                                        </li>
+                                        <li class="reply">
+                                            <a href="#" onclick="return false">
+                                                Reply
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-ui-calendar"></i> 5 February'17
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <!-- /.pname -->
+                                <div class="cmnt-reply comment w100dt">
+                                    <div class="ppic left">
+                                        <img src="{{ MEDIA_URL }}/users/user1.jpeg" alt="Image">
+                                    </div>
+                                    <!-- /.ppic -->
+                                    <div class="pname">
+                                        <h4 class="mb-10">
+                                            <a href="#" class="card-title l-blue" onclick="return false">
+                                                白小江
+                                            </a>
+                                        </h4>
+                                        <p class="comment-text mb-10">
+                                            转轴拨弦三两声，未成曲调先有情。弦弦掩抑声声思，似诉平生不得志。
+                                        </p>
+
+                                        <ul class="post-mate-time left">
+                                            <li class="like">
+                                                <a href="#">
+                                                    <i class="icofont icofont-heart-alt"></i> 55
+                                                </a>
+                                            </li>
+                                            <li class="comment">
+                                                <a href="#">
+                                                    <i class="icofont icofont-comment"></i> 32
+                                                </a>
+                                            </li>
+                                            <li class="reply">
+                                                <a href="#">
+                                                    Reply
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <i class="icofont icofont-ui-calendar"></i> 5 February'17
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                    <!-- /.pname -->
+                                </div>
+                                <!-- /.cmnt-reply -->
+                            </div>
+                            <div class="comment w100dt">
+                                <div class="ppic left">
+                                    <img src="{{ MEDIA_URL }}/users/user2.jpg" alt="Image">
+                                </div>
+                                <!-- /.ppic -->
+                                <div class="pname">
+                                    <h4 class="mb-10">
+                                        <a href="#" class="card-title l-blue">
+                                            小江白
+                                        </a>
+                                    </h4>
+                                    <p class="comment-text mb-10">
+                                        楼上的诸位都是才子！
+                                    </p>
+
+                                    <ul class="post-mate-time left">
+                                        <li class="like">
+                                            <a href="#">
+                                                <i class="icofont icofont-heart-alt"></i> 55
+                                            </a>
+                                        </li>
+                                        <li class="comment">
+                                            <a href="#">
+                                                <i class="icofont icofont-comment"></i> 32
+                                            </a>
+                                        </li>
+                                        <li class="reply">
+                                            <a href="#">
+                                                Reply
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-ui-calendar"></i> 5 February'17
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <!-- /.pname -->
+                            </div>
+
+                        </div>
+                        <!-- /.comment-area -->
+                    </div>
+                    <!-- /.peoples-comments -->
+
+
+                    <!-- /.leave-comment -->
+
+                </div>
+                <!-- colm8 -->
+
+
+                <div class="col s12 m4 l4">
+
+                    <div class="sidebar-testimonial mb-30">
+                        <div class="sidebar-title center-align">
+                            <h2>Hi Its Me!</h2>
+                        </div>
+                        <!-- /.sidebar-title -->
+
+                        <div class="carousel carousel-slider center" data-indicators="true">
+                            {% for itsme in itsmes %}
+                                <div class="carousel-item">
+                                    <div class="item-img">
+                                        <span>{{ itsme.tag }}</span>
+                                    </div>
+                                    <h2>{{ itsme.title }}</h2>
+                                    <small>{{ itsme.se_title }}</small>
+                                    <p>
+                                        {{ itsme.info }}
+                                    </p>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <!-- /.sidebar-testimonial -->
+
+
+                    <div class="featured-posts w100dt mb-30">
+                        <div class="sidebar-title center-align">
+                            <h2>Featured Posts</h2>
+                        </div>
+                        <!-- /.sidebar-title -->
+
+                        <div class="sidebar-posts">
+                            {% for article in content_articles %}
+                                <div class="card">
+                                    <div class="card-image mb-10">
+                                        <img src="{{ MEDIA_URL }}{{ article.img }}" alt="Image">
+                                        <span class="effect"></span>
+                                    </div>
+                                    <!-- /.card-image -->
+                                    <div class="card-content w100dt">
+                                        <p>
+                                            <a href="{% url 'articleslist' article.categorie_id %}"
+                                               class="tag left w100dt l-blue mb-10">{{ article.categorie.name }}</a>
+                                        </p>
+                                        <a href="{% url 'articledetail' article.id %}"
+                                           class="card-title">
+                                            {{ article.title }}
+                                        </a>
+                                        <ul class="post-mate-time left">
+                                            <li>
+                                                <p class="hero left">
+                                                    By - <a href="#" class="l-blue"
+                                                            onclick="return false">{{ article.author }}</a>
+                                                </p>
+                                            </li>
+                                        </ul>
+
+                                        <ul class="post-mate right">
+                                            <li class="like">
+                                                <a href="#" onclick="return false">
+                                                    <i class="icofont icofont-heart-alt"></i> {{ article.fav_nums }}
+                                                </a>
+                                            </li>
+                                            <li class="comment" onclick="return false">
+                                                <a href="#" onclick="return false">
+                                                    <i class="icofont icofont-comment"></i> {{ article.comment_nums }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.card-content -->
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <!-- /.sidebar-posts -->
+
+                    </div>
+                    <!-- /.featured-posts -->
+
+
+                    <div class="top-post w100dt mb-30">
+                        <div class="sidebar-title center-align">
+                            <h2>Top Posts</h2>
+                        </div>
+                        <!-- /.sidebar-title -->
+
+                        <ul id="tabs-swipe-demo" class="top-post-tab tabs tabs-fixed-width">
+                            <li class="tab"><a href="#test-swipe-1" class="active">Most Views</a></li>
+                            <li class="tab"><a href="#test-swipe-2">Recent</a></li>
+                        </ul>
+
+                        <div id="test-swipe-1" class="tab-contant most-view">
+
+                            <div class="sidebar-posts">
+                                {% for article in view_articles %}
+                                    {% ifequal forloop.counter 1 %}
+                                        <div class="card">
+                                            <div class="card-image mb-10">
+                                                <img src="{{ MEDIA_URL }}{{ article.img }}" alt="Image">
+                                                <span class="effect"></span>
+                                            </div>
+                                            <!-- /.card-image -->
+                                            <div class="card-content w100dt">
+                                                <p>
+                                                    <a href="{% url 'articleslist' article.categorie_id %}"
+                                                       class="tag left w100dt l-blue mb-10">{{ article.categorie.name }}</a>
+                                                </p>
+                                                <a href="{% url 'articledetail' article.id %}"
+                                                   class="card-title">
+                                                    {{ article.title }}
+                                                </a>
+                                                <ul class="post-mate-time left">
+                                                    <li>
+                                                        <p class="hero left">
+                                                            By - <a href="#"
+                                                                    class="l-blue">{{ article.author }}</a>
+                                                        </p>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="post-mate right">
+                                                    <li class="like">
+                                                        <a href="#" onclick="return false">
+                                                            <i class="icofont icofont-heart-alt"></i> {{ article.fav_nums }}
+                                                        </a>
+                                                    </li>
+                                                    <li class="comment">
+                                                        <a href="#" onclick="return false">
+                                                            <i class="icofont icofont-comment"></i> {{ article.comment_nums }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- /.card-content -->
+                                        </div>
+                                        <!-- /.card -->
+
+                                    {% else %}
+                                        <div class="hot-post w100dt mb-10">
+                                            <div class="hot-post-image">
+                                                <img src="{{ MEDIA_URL }}{{ article.img }}" alt="Image">
+                                                <span class="effect"></span>
+                                            </div>
+                                            <!-- /.hot-post-image -->
+                                            <div class="hot-post-stacked">
+                                                <p>
+                                                    <a href="{% url 'articleslist' article.categorie_id %}"
+                                                       class="tag left w100dt l-blue mb-10">{{ article.categorie.name }}</a>
+                                                </p>
+                                                <a href="{% url 'articledetail' article.id %}"
+                                                   class="sm-name mb-10">
+                                                    {{ article.title }}
+                                                    Saboris</a>
+                                                <div class="hot-post-action">
+                                                    <p class="hero left">
+                                                        BY - <a href="#" class="l-blue"
+                                                                onclick="return false">{{ article.author }}</a>
+                                                    </p>
+                                                    <ul class="post-mate right">
+                                                        <li class="comment">
+                                                            <a href="#" onclick="return false">
+                                                                <i class="icofont icofont-comment"></i> {{ article.comment_nums }}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- /.post-mate -->
+                                                </div>
+                                                <!-- /.hot-post-action -->
+                                            </div>
+                                            <!-- /.hot-post-stacked -->
+                                        </div>
+                                    {% endifequal %}
+                                {% endfor %}
+                            </div>
+                            <!-- /.sidebar-posts -->
+
+                        </div>
+                        <!-- /.most-view -->
+
+
+                        <div id="test-swipe-2" class="tab-contant recent-post">
+                            {% for article in recent_articles %}
+                                <div class="hot-post w100dt p-15">
+                                    <div class="hot-post-image">
+                                        <img src="{{ MEDIA_URL }}{{ article.img }}" alt="Image">
+                                        <span class="effect"></span>
+                                    </div>
+                                    <!-- /.hot-post-image -->
+                                    <div class="hot-post-stacked">
+                                        <p>
+                                            <a href="{% url 'articleslist' article.categorie_id %}"
+                                               class="tag left w100dt l-blue mb-10">{{ article.categorie.name }}</a>
+                                        </p>
+                                        <a href="{% url 'articledetail' article.id %}"
+                                           class="sm-name mb-10">
+                                            {{ article.title }}
+                                        </a>
+                                        <div class="hot-post-action">
+                                            <p class="hero left">
+                                                BY - <a href="#" class="l-blue"
+                                                        onclick="return false">{{ article.author }}</a>
+                                            </p>
+                                            <ul class="post-mate right">
+                                                <li class="comment">
+                                                    <a href="#" onclick="return false">
+                                                        <i class="icofont icofont-comment"></i> {{ article.comment_nums }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <!-- /.post-mate -->
+                                        </div>
+                                        <!-- /.hot-post-action -->
+                                    </div>
+                                    <!-- /.hot-post-stacked -->
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <!-- /.recent-post -->
+
+                    </div>
+                    <!-- /.top-post -->
+
+                </div>
+                <!-- colm4 -->
+
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </section>
+    <!-- /#single-blog-section -->
+    <!-- ==================== single-blog-section end ====================-->
+
+
+
+
+{% endblock %}
